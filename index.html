@@ -1,18 +1,32 @@
 <html>
+
 <head>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body style="background: black; color: white;" 
-	class="container p-5">
-<h1 class="mb-4">How much AP do I need to grind to get to 65?</h1>
-<div class="text-center">
-	<img src="https://gdurl.com/Ul2Y" />
-</div>
- <h4 class="mt-4">Current Azerite Knowledge Level: <span id="ak"></span></h4>
-<div class="form mt-4">
-<div class="form-group">
- <label>Current Heart of Azeroth Level</label>
- <select id="level" class="form-control">
+
+<body style="background: black; color: white;" class="container p-5">
+	<h1 class="mb-4">How much AP do I need to grind to get to 65?</h1>
+	<div class="text-center">
+		<img src="https://gdurl.com/Ul2Y" />
+	</div>
+
+	<h4 class="mt-4">Current Azerite Knowledge Level: <span id="ak"></span></h4>
+
+	<ul role="tablist" id="tabs" class="nav nav-tabs">
+		<li class="nav-item">
+			<a href="#how-long" id="how-long-tab" data-toggle="tab" class="nav-link active">How Long?</a>
+		</li>
+		<li class="nav-item">
+			<a href="#how-much" id="how-much-tab" data-toggle="tab" class="nav-link">How Much?</a>
+		</li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane fade show active" id="how-long">
+			<div class="form mt-4">
+				<div class="form-group">
+					<label>Current Heart of Azeroth level</label>
+					<select id="level" class="form-control">
 	<option value="50">50</option>
 	<option value="51">51</option>
 	<option value="52">52</option>
@@ -29,11 +43,10 @@
 	<option value="63">63</option>
 	<option value="64">64</option>
  </select>
-</div>
-
-<div class="form-group">
- <label>I'll start farming...</label>
- <select id="delay" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>I'll start farming...</label>
+					<select id="delay" class="form-control">
 	<option value="0">This week</option>
 	<option value="1">Next week</option>
 	<option value="2">In 2 weeks</option>
@@ -51,82 +64,215 @@
 	<option value="14">In 14 weeks</option>
 	<option value="15">In 15 weeks</option>
  </select>
-</div>
+				</div>
+				<div class="form-group">
+					<label>Azerite farmed per week</label>
+					<input id="ap" class="form-control" type="text" />
+				</div>
+				<div class="form-group">
+					<button onclick="findWeeks()" class="btn btn-success" type="button">When can I stop?</button>
+				</div>
+				<div class="well">
+					<p id="ans"></p>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="how-much">
+			<div class="form mt-4">
+				<div class="form-group">
+					<label>Current Heart of Azeroth level</label>
+					<select id="lev" class="form-control">
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+	<option value="60">60</option>
+	<option value="61">61</option>
+	<option value="62">62</option>
+	<option value="63">63</option>
+	<option value="64">64</option>
+ </select>
+				</div>
 <div class="form-group">
- <label>Azerite farmed per week</label>
- <input id="ap" class="form-control" type="text" />
-</div>
-<div class="form-group">
-	<button onclick="calculate()" class="btn btn-success" type="button">When can I stop?</button>
-</div>
+					<label>Desired Heart of Azeroth level</label>
+					<select id="goal" class="form-control">
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+	<option value="60">60</option>
+	<option value="61">61</option>
+	<option value="62">62</option>
+	<option value="63">63</option>
+	<option value="64">64</option>
+	<option value="65">65</option>
+ </select>
+ 
+				</div>
+				<div class="form-group">
+					<label>When do you want it</label>
+					<select id="weeks" class="form-control">
+	<option value="1">By next week</option>
+	<option value="2">In 2 weeks</option>
+	<option value="3">In 3 weeks</option>
+	<option value="4">In 4 weeks</option>
+	<option value="5">In 5 weeks</option>
+	<option value="6">In 6 weeks</option>
+	<option value="7">In 7 weeks</option>
+	<option value="8">In 8 weeks</option>
+	<option value="9">In 9 weeks</option>
+	<option value="10">In 10 weeks</option>
+	<option value="11">In 11 weeks</option>
+	<option value="12">In 12 weeks</option>
+	<option value="13">In 13 weeks</option>
+	<option value="14">In 14 weeks</option>
+	<option value="15">In 15 weeks</option>
+ </select>
+ 
+				</div>
+								<div class="form-group">
+					<label>I'll start farming...</label>
+					<select id="delay2" class="form-control">
+	<option value="0">This week</option>
+	<option value="1">Next week</option>
+	<option value="2">In 2 weeks</option>
+	<option value="3">In 3 weeks</option>
+	<option value="4">In 4 weeks</option>
+	<option value="5">In 5 weeks</option>
+	<option value="6">In 6 weeks</option>
+	<option value="7">In 7 weeks</option>
+	<option value="8">In 8 weeks</option>
+	<option value="9">In 9 weeks</option>
+	<option value="10">In 10 weeks</option>
+	<option value="11">In 11 weeks</option>
+	<option value="12">In 12 weeks</option>
+	<option value="13">In 13 weeks</option>
+	<option value="14">In 14 weeks</option>
+	<option value="15">In 15 weeks</option>
+ </select>
+			</div>
+				<div class="form-group">
+					<button onclick="findAvg()" class="btn btn-success" type="button">How much per week?</button>
+				</div>
+				<div class="well">
+					<p id="ans2"></p>
+				</div>
+		</div>
+	</div>
 
-<div class="well">
-	<p id="ans"></p>
-</div>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-  crossorigin="anonymous"></script>
-<script>
 
-var weekZeroMs = 1561474800000;
-var weekInMs = 1000 * 60 * 60 * 24 * 7;
-var currentAKLevel = Math.floor((Date.now() - weekZeroMs) / weekInMs)
-$('#ak').text(currentAKLevel);
 
-function calculate() {
-	var weeks = calculateAp();
-	$('#ans').text('You can stop farming after ' + weeks.toString() + ' weeks.');
-}
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script>
+		var azeriteMulti = 0.76925;
+		var weekZeroMs = 1561474800000;
+		var weekInMs = 1000 * 60 * 60 * 24 * 7;
+		var currentAKLevel = Math.floor((Date.now() - weekZeroMs) / weekInMs)
+		$('#ak').text(currentAKLevel);
 
-function calculateAp() {
+		function findWeeks() {
+			var apPerWeek = parseInt($('#ap').val());
+			var currentLevel = parseInt($('#level').val());
+			var skipWeeks = parseInt($('#delay2').val());
+			var weeks = calculateWeeks(apPerWeek, currentLevel, 65, skipWeeks);
+			$('#ans').text('You can stop farming after ' + weeks.toString() + ' weeks.');
+		}
 
-	var azeritePerWeek = parseInt($('#ap').val());
-	var currentLevel = parseInt($('#level').val());
-	var skipWeeks = parseInt($('#delay').val());
-	var azeriteLevels = [
-		17550,
-		22820,
-		29660,
-		38560,
-		50120,
-		65160,
-		84710,
-		110120,
-		143160,
-		186110,
-		241940,
-		314530,
-		408880,
-		531550,
-		691010
-	];
+		function findAvg() {
+			var currentLevel = parseInt($('#lev').val());
+			var desiredLevel = parseInt($('#goal').val());
+			var weeks = parseInt($('#weeks').val());
+			var delay = parseInt($('#delay2').val());
+			var ap = guessAvg(currentLevel, desiredLevel, weeks, delay);
+			$('#ans2').text('You need to farm ' + ap.toString() + ' Azerite per week to reach your goal. Good luck!');
+		}
 
-	var azeriteMulti = 0.76925;
-	var grindTotal = 0;
-	var totalWeeks = 0;
-	
-	for (var i = currentLevel-50; i < azeriteLevels.length; i++){
-		grindTotal += azeriteLevels[i];
-	}
-	
-	for (var i = 1; i <= currentAKLevel; i++){
-		grindTotal = grindTotal * azeriteMulti;
-	}
+		function remainingAp(startLevel, endLevel, ak) {
+			var azeriteLevels = [
+				17550,
+				22820,
+				29660,
+				38560,
+				50120,
+				65160,
+				84710,
+				110120,
+				143160,
+				186110,
+				241940,
+				314530,
+				408880,
+				531550,
+				691010
+			];
 
-	for (var i = 0; i < skipWeeks; i++){
-		totalWeeks++;
-		grindTotal = grindTotal * azeriteMulti;
-	}
-	
-	while (grindTotal > 0) {
-		totalWeeks++;
-		grindTotal = grindTotal - azeritePerWeek;
-		grindTotal = grindTotal * azeriteMulti;
-	}
+			var grindTotal = 0;
+			for (var i = startLevel - 50; i < (endLevel - 50); i++) {
+				grindTotal = grindTotal + azeriteLevels[i];
+			}
 
-	return totalWeeks;
-}
-</script>
+			for (var i = 1; i <= ak; i++) {
+				grindTotal = grindTotal * azeriteMulti;
+			}
+
+			return Math.floor(grindTotal);
+		}
+
+		function guessAvg(currentLevel, desiredLevel, desiredWeeks, delay) {
+			var grindTotal = remainingAp(currentLevel, desiredLevel, currentAKLevel);
+
+			var highestGuess = Math.ceil(grindTotal / desiredWeeks);
+			var lowestGuess = 1;
+
+			while (highestGuess > lowestGuess + 10) {
+				var previousLow = lowestGuess;
+				lowestGuess = Math.floor((highestGuess + lowestGuess) / 2) + 1;
+				if (calculateWeeks(lowestGuess, currentLevel, desiredLevel, delay) <= desiredWeeks) {
+					highestGuess = lowestGuess;
+					lowestGuess = previousLow;
+				}
+			}
+
+			return highestGuess;
+		}
+
+		function calculateWeeks(apPerWeek, currentLevel, desiredLevel, skipWeeks) {
+			var grindTotal = remainingAp(currentLevel, desiredLevel, currentAKLevel);
+			var totalWeeks = 0;
+
+			for (var i = 0; i < skipWeeks; i++) {
+				totalWeeks++;
+				grindTotal = grindTotal * azeriteMulti;
+			}
+
+			while (grindTotal > 0) {
+				totalWeeks++;
+				grindTotal = grindTotal - apPerWeek;
+				grindTotal = grindTotal * azeriteMulti;
+			}
+
+			return totalWeeks;
+		}
+
+		function calculateAvgAp() {
+			var weeksToGrind = 4;
+
+		}
+	</script>
 </body>
+
 </html>

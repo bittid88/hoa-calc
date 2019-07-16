@@ -1,0 +1,108 @@
+<html>
+<head>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background: black; color: white;" 
+	class="container p-5">
+<h1 class="mb-4">How much AP do I need to grind to get to 65?</h1>
+<div class="text-center">
+	<img src="https://gdurl.com/Ul2Y" />
+</div>
+ <h4 class="mt-4">Current Azerite Knowledge Level: <span id="ak"></span></h4>
+<div class="form mt-4">
+<div class="form-group">
+ <label>Current Heart of Azeroth Level</label>
+ <select id="level" class="form-control">
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+	<option value="60">60</option>
+	<option value="61">61</option>
+	<option value="62">62</option>
+	<option value="63">63</option>
+	<option value="64">64</option>
+ </select>
+</div>
+<div class="form-group">
+ <label>Azerite farmed per week</label>
+ <input id="ap" class="form-control" type="text" />
+</div>
+<div class="form-group">
+	<button onclick="calculate()" class="btn btn-success" type="button">When can I stop?</button>
+</div>
+
+<div class="well">
+	<p id="ans"></p>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+<script>
+
+var weekZeroMs = 1561474800000;
+var weekInMs = 1000 * 60 * 60 * 24 * 7;
+var currentAKLevel = Math.floor((Date.now() - weekZeroMs) / weekInMs)
+$('#ak').text(currentAKLevel);
+
+function calculate() {
+	var weeks = calculateAp();
+	$('#ans').text('You can stop farming after ' + weeks.toString() + ' weeks.');
+}
+
+function calculateAp() {
+
+	var azeritePerWeek = parseInt($('#ap').val());
+	var currentLevel = parseInt($('#level').val());
+	var azeriteLevels = [
+		17550,
+		22820,
+		29660,
+		38560,
+		50120,
+		65160,
+		84710,
+		110120,
+		143160,
+		186110,
+		241940,
+		314530,
+		408880,
+		531550,
+		691010
+	];
+
+	var azeriteMulti = 0.76925;
+	var grindTotal = 0;
+	var totalWeeks = 0;
+	
+	console.log(currentLevel-50);
+	for (var i = currentLevel-50; i < azeriteLevels.length; i++){
+		grindTotal += azeriteLevels[i];
+	}
+	
+	console.log(currentAKLevel);
+	for (var i = 1; i <= currentAKLevel; i++){
+		grindTotal = grindTotal * azeriteMulti;
+		console.log(grindTotal);
+	}
+
+	while (grindTotal > 0) {
+		totalWeeks++;
+		grindTotal = grindTotal - azeritePerWeek;
+		grindTotal = grindTotal * azeriteMulti;
+		console.log(grindTotal);
+	}
+
+	return totalWeeks;
+}
+</script>
+</body>
+</html>

@@ -30,6 +30,28 @@
 	<option value="64">64</option>
  </select>
 </div>
+
+<div class="form-group">
+ <label>I'll start farming...</label>
+ <select id="delay" class="form-control">
+	<option value="0">This week</option>
+	<option value="1">Next week</option>
+	<option value="2">In 2 weeks</option>
+	<option value="3">In 3 weeks</option>
+	<option value="4">In 4 weeks</option>
+	<option value="5">In 5 weeks</option>
+	<option value="6">In 6 weeks</option>
+	<option value="7">In 7 weeks</option>
+	<option value="8">In 8 weeks</option>
+	<option value="9">In 9 weeks</option>
+	<option value="10">In 10 weeks</option>
+	<option value="11">In 11 weeks</option>
+	<option value="12">In 12 weeks</option>
+	<option value="13">In 13 weeks</option>
+	<option value="14">In 14 weeks</option>
+	<option value="15">In 15 weeks</option>
+ </select>
+</div>
 <div class="form-group">
  <label>Azerite farmed per week</label>
  <input id="ap" class="form-control" type="text" />
@@ -61,6 +83,7 @@ function calculateAp() {
 
 	var azeritePerWeek = parseInt($('#ap').val());
 	var currentLevel = parseInt($('#level').val());
+	var skipWeeks = parseInt($('#delay').val());
 	var azeriteLevels = [
 		17550,
 		22820,
@@ -83,22 +106,23 @@ function calculateAp() {
 	var grindTotal = 0;
 	var totalWeeks = 0;
 	
-	console.log(currentLevel-50);
 	for (var i = currentLevel-50; i < azeriteLevels.length; i++){
 		grindTotal += azeriteLevels[i];
 	}
 	
-	console.log(currentAKLevel);
 	for (var i = 1; i <= currentAKLevel; i++){
 		grindTotal = grindTotal * azeriteMulti;
-		console.log(grindTotal);
 	}
 
+	for (var i = 0; i < skipWeeks; i++){
+		totalWeeks++;
+		grindTotal = grindTotal * azeriteMulti;
+	}
+	
 	while (grindTotal > 0) {
 		totalWeeks++;
 		grindTotal = grindTotal - azeritePerWeek;
 		grindTotal = grindTotal * azeriteMulti;
-		console.log(grindTotal);
 	}
 
 	return totalWeeks;
